@@ -11,6 +11,7 @@ import {
   Space,
   Table,
 } from "./modules";
+import Transition from "./modules/Transition";
 
 export default function Learning() {
   return (
@@ -42,6 +43,9 @@ export default function Learning() {
       <hr />
       <br />
       <Table />
+      <hr />
+      <br />
+      <Transition />
     </div>
   );
 }
