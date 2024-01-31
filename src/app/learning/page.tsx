@@ -1,4 +1,5 @@
 "use client";
+import { auth } from "../lib/auth";
 import {
   Container,
   Break,

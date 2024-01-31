@@ -1,8 +1,3 @@
-import NextAuth from "next-auth";
-
-const handler = NextAuth({
-  providers: [],
-  secret: process.env.AUTH_SECRET_KEY,
-});
+import handler from "@/app/lib/authOptions";
 
 export { handler as GET, handler as POST };
