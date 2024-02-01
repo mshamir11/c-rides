@@ -1,6 +1,8 @@
 "use client";
 import { auth } from "../lib/auth";
 import {
+  Interactivity,
+  Transition,
   Container,
   Break,
   BoxDecoration,
@@ -12,7 +14,6 @@ import {
   Space,
   Table,
 } from "./modules";
-import Transition from "./modules/Transition";
 
 export default function Learning() {
   return (
@@ -47,6 +48,9 @@ export default function Learning() {
       <hr />
       <br />
       <Transition />
+      <hr />
+      <br />
+      <Interactivity />
     </div>
   );
 }

@@ -9,8 +9,10 @@ import BoxDecoration from "./BoxDecoration";
 import Break from "./Break";
 import Container from "./Container";
 import Transition from "./Transition";
+import Interactivity from "./Interactivity";
 
 export {
+  Interactivity,
   Transition,
   Container,
   Break,
