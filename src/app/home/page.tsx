@@ -1,12 +1,13 @@
 import { auth } from "@/app/lib/auth";
 import { redirect } from "next/navigation";
+import { SIGN_IN_URL } from "@/app/utils/constants";
 
 export default async function Home() {
   const session = await auth();
   if (session) {
     return getLandingPageForRegisteredUsers();
   } else {
-    redirect("api/auth/signIn");
+    redirect(SIGN_IN_URL);
   }
 }
 
