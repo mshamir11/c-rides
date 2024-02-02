@@ -11,6 +11,9 @@ const config: Config = {
       spacing: {
         "128": "32rem",
       },
+      height: {
+        "18": "4.5rem",
+      },
     },
   },
   plugins: [],
