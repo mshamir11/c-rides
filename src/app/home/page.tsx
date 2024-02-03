@@ -1,6 +1,7 @@
 import { auth } from "@/app/lib/auth";
 import { redirect } from "next/navigation";
 import { SIGN_IN_URL } from "@/app/utils/constants";
+import Link from "next/link";
 
 export default async function Home() {
   const session = await auth();
@@ -19,9 +20,12 @@ const getLandingPageForRegisteredUsers = () => {
         <br />
         <hr />
         <div className="flex h-16 justify-center  items-center space-x-4">
-          <button className="flex p-4 w-32 h-10 border-2 border-black justify-center items-center rounded-md">
+          <Link
+            href="/home/rides/create"
+            className="flex p-4 w-32 h-10 border-2 border-black justify-center items-center rounded-md"
+          >
             Create Ride
-          </button>
+          </Link>
           <button className="flex p-4 w-32 h-10 border-2 border-black justify-center items-center rounded-md">
             Join Ride
           </button>
