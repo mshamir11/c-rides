@@ -14,6 +14,9 @@ const config: Config = {
       height: {
         "18": "4.5rem",
       },
+      fontSize: {
+        xss: "0.625rem",
+      },
     },
   },
   plugins: [],
