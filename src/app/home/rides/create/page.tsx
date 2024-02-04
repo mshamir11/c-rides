@@ -4,8 +4,9 @@ import { createRide } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
 
 export default function CreateRidePage() {
-  const initialState = { message: null, errors: {} };
+  const initialState = { message: "", errors: {} };
   const [state, dispatch] = useFormState(createRide, initialState);
+  console.log("mshamirt states:", state);
   return (
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-black">
       <div className="flex flex-col items-center justify-center">
