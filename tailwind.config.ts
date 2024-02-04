@@ -17,6 +17,12 @@ const config: Config = {
       fontSize: {
         xss: "0.625rem",
       },
+      backgroundImage: {
+        "bubble-pattern": "url('/bg-pattern-card.svg')",
+      },
+      borderWidth: {
+        "1/2": "0.5px",
+      },
     },
   },
   plugins: [],
