@@ -17,7 +17,7 @@ model Ride {
   rideName String @db.VarChar(255)
   destinationLocation String @db.VarChar(255)
   startLocation String @db.VarChar(255)
-  startDate DateTime @db.Date
+  startDate DateTime @db.Date @default(now())
   tripDuration Int
   createdBy User @relation(fields: [userId], references: [id])
   userId String
@@ -28,5 +28,4 @@ model User {
   email String @unique
   name String?
   ridesJoined Ride[]
-  profilePic String @db.VarChar(255)
 }
