@@ -4,7 +4,7 @@ import { createRide } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
 
 export default function CreateRidePage() {
-  const initialState = { message: "", errors: {} };
+  const initialState = { errors: {}, message: null };
   const [state, dispatch] = useFormState(createRide, initialState);
   console.log("mshamirt states:", state);
   return (
@@ -76,6 +76,9 @@ export default function CreateRidePage() {
               </button>
             </div>
           </form>
+        </div>
+        <div className="test">
+          <pre>{JSON.stringify(state)}</pre>
         </div>
       </div>
     </div>
