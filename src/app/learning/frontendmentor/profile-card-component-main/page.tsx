@@ -3,8 +3,8 @@ import ProfileImage from "./images/image-victor.jpg";
 
 export default function ProfileCard() {
   return (
-    <div className="main">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-56 rounded-md overflow-clip drop shadow-md">
+    <div className="main ">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-56 rounded-md overflow-clip drop shadow-md bg-white">
         <div className="flex flex-col items-center divide-y-1/2 divide-slate-400">
           <div className="w-full relative">
             <Image

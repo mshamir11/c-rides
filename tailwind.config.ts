@@ -23,6 +23,11 @@ const config: Config = {
       borderWidth: {
         "1/2": "0.5px",
       },
+      colors: {
+        cyan: {
+          550: "#1AA1AE",
+        },
+      },
     },
   },
   plugins: [],
