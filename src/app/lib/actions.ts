@@ -1,5 +1,8 @@
 "use server";
 import { z } from "zod";
+import { PrismaClient, User } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 const RideSchema = z.object({
   id: z.string(),
@@ -31,8 +34,11 @@ export type State = {
   message?: string | null;
 };
 
-export async function createRide(prevState: State, formData: FormData) {
-  console.log("im here");
+export async function createRide(
+  prevState: State | void,
+  formData: FormData
+): Promise<State | void> {
+  console.log("im here", prevState);
   const validatedFields = CreateRideSchema.safeParse({
     rideName: formData.get("rideName"),
     destinationLocation: formData.get("destinationLocation"),
@@ -48,11 +54,32 @@ export async function createRide(prevState: State, formData: FormData) {
       "mshamirt: validatedFieldsErrors:",
       validatedFields.error.flatten().fieldErrors
     );
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Failed to create ride"',
-    };
   }
 
-  return { errors: {}, message: "test" };
+  try {
+    const user = await getUser();
+    console.log("got user detatils: user: ", user);
+    const newRide = await prisma.ride.create({
+      data: {
+        rideName: "test1",
+        destinationLocation: "destinationLocatoin1",
+        startLocation: "startLocation1",
+        tripDuration: 1,
+        userId: user.id,
+      },
+    });
+    console.log("new Ride created:", newRide);
+  } catch (error) {
+    console.log("error creating ride: ", error);
+  }
+  return {};
+}
+
+export async function getUser() {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      email: "test1@gmail.com",
+    },
+  });
+  return user;
 }
