@@ -92,3 +92,7 @@ export async function getUser() {
   });
   return user;
 }
+
+export async function showMyRides() {
+  console.log("Show my rides");
+}
