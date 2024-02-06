@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Community Rides",
   description: "Ride hosting built by community for the people",
 };
-
+// TODO : Investigate why the className added to root layout hinders the use of tailwind in layout of children
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
