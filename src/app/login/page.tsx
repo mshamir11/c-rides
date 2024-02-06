@@ -1,15 +1,10 @@
 "use client";
 
-import { authenticate } from "@/app/lib/actions";
-import { useFormState } from "react-dom";
-
 const LoginPage = () => {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
-
   return (
     <div className="flex justify-center h-screen items-center ">
       <div className="flex h-128 w-96 border rounded-lg border-black justify-center items-center">
-        <form className="flex flex-col gap-8" action={dispatch}>
+        <form className="flex flex-col gap-8">
           <input type="email" name="email" placeholder="Email" required />
           <input
             type="password"
