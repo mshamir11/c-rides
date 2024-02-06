@@ -22,7 +22,6 @@ export default function RootLayout({
           backgroundImage: "url(/bg-pattern-top.svg)",
         }}
       >
-        <div className="bg-no-repeat bg-top bg-red-600"></div>
         {children}
       </body>
     </html>
