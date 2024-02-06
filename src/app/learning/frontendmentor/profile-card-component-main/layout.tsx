@@ -19,7 +19,9 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-cyan-550 bg-[-25%_60%]`}
         style={{
-          backgroundImage: "url(/bg-pattern-top.svg)",
+          backgroundImage:
+            "url(/bg-pattern-top.svg), url(/bg-pattern-bottom.svg)",
+          backgroundRepeat: "no-repeat",
         }}
       >
         {children}
