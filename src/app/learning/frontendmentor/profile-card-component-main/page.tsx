@@ -8,8 +8,8 @@ export default function ProfileCard() {
   return (
     <div className={`${kumbh.className} main min-h-screen bg-cyan-550 bg-no-repeat bg-[url(/bg-pattern-top.svg),url(/bg-pattern-bottom.svg)]`}
     style={{
-      backgroundPosition: "0vh -20vh, 60vh 50vh"}}>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20rem] h-[26rem] rounded-md overflow-clip drop shadow-md bg-white">
+      backgroundPosition: "right 50vw bottom 40vh ,left 45vw top 60vh"}}>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[400px] rounded-md overflow-clip drop shadow-md bg-white">
         <div className="flex flex-col items-center divide-y-1/2 divide-slate-400">
           <div className="w-full relative">
             <Image
