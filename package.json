@@ -5,7 +5,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm prisma migrate dev && next build",
     "start": "next start",
     "lint": "next lint",
     "db-studio": "pnpm prisma studio",
