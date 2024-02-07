@@ -1,6 +1,6 @@
 "use server";
-import { z } from "zod";
 import { PrismaClient, User } from "@prisma/client";
+import { z } from "zod";
 
 const prisma = new PrismaClient();
 
@@ -15,6 +15,12 @@ const RideSchema = z.object({
   updatedAt: z.date(),
   createdBy: z.string(),
 });
+
+const Ride = RideSchema.omit({
+  createdBy: true
+})
+
+export type IRide = z.TypeOf<typeof Ride>;
 
 const CreateRideSchema = RideSchema.omit({
   id: true,
@@ -57,7 +63,7 @@ export async function createRide(
     let messageString = "";
     let errorString = "";
     try {
-      const user = await getUser();
+      const user = await getUser("test1@gmail.com");
       const newRide = await prisma.ride.create({
         data: {
           rideName: validatedFields.data.rideName,
@@ -84,15 +90,21 @@ export async function createRide(
   }
 }
 
-export async function getUser() {
+export async function getUser(email:string) {
   const user = await prisma.user.findUniqueOrThrow({
     where: {
-      email: "test1@gmail.com",
+      email: email,
     },
+    include: {
+      ridesCreated: true,
+      ridesJoined: true
+    }
   });
   return user;
 }
 
 export async function showMyRides() {
-  console.log("Show my rides");
+  const emailId = "test1@gmail.com";
+  const user = await getUser(emailId);
+  return [...user.ridesCreated, ...user.ridesJoined];
 }

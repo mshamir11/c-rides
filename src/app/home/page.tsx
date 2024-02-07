@@ -5,12 +5,15 @@ import { SIGN_IN_URL } from "@/app/utils/constants";
 import Link from "next/link";
 import { showMyRides } from "../lib/actions";
 import { useState } from "react";
+import { IRide } from "../lib/actions";
 
 export default function Home() {
-  const [rides, setRides] = useState([]);
+  const [rides, setRides] = useState<IRide[]>([]);
 
-  //TODO : Implement show my rides
-  const handleShowMyRides = () => {};
+  const handleShowMyRides = async () => {
+    const ridesJoined = await showMyRides();
+    setRides(ridesJoined);
+  };
 
   const getLandingPageForRegisteredUsers = () => {
     return (
@@ -31,11 +34,30 @@ export default function Home() {
             </button>
             <button
               className="flex p-4 w-40 h-10 border-2 border-black justify-center items-center rounded-md"
-              onClick={handleShowMyRides}
+              onClick={() => handleShowMyRides()}
             >
               Show my rides
             </button>
           </div>
+
+          {rides.length > 0 && (
+            <div>
+              <br />
+              <hr />
+              <div>
+                My rides
+                <div>
+                  {rides.map((ride) => (
+                    <div key={ride.id}>
+                      <p>ID: {ride.id}</p>
+                      <p>Ride Name: {ride.rideName}</p>
+                      <p>Destination Location: {ride.destinationLocation}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
