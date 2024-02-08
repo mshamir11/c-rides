@@ -41,52 +41,59 @@ export type State = {
   message?: string | null;
 };
 
+/**
+ * Creates a new ride in the database.
+ * @param prevState - The previous state object containing any existing errors and messages.
+ * @param formData - The form data containing the ride information.
+ * @returns A promise that resolves to an object containing the error information (if any) and a success or failure message.
+ */
 export async function createRide(
   prevState: State | void,
   formData: FormData
 ): Promise<State | void> {
-  const validatedFields = CreateRideSchema.safeParse({
-    rideName: formData.get("rideName"),
-    destinationLocation: formData.get("destinationLocation"),
-    startLocation: formData.get("startLocation"),
-    startDate: formData.get("startDate"),
-    tripDuration: formData.get("tripDuration"),
-  });
+  try {
+    const validatedFields = CreateRideSchema.safeParse({
+      rideName: formData.get("rideName"),
+      destinationLocation: formData.get("destinationLocation"),
+      startLocation: formData.get("startLocation"),
+      startDate: formData.get("startDate"),
+      tripDuration: formData.get("tripDuration"),
+    });
 
-  // If form validation fails, return errors early. Otherwise, continue.
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: "Failed to create a new ride",
-    };
-  } else {
-    let messageString = "";
-    let errorString = "";
-    try {
-      const user = await getUser("test1@gmail.com");
-      const newRide = await prisma.ride.create({
-        data: {
-          rideName: validatedFields.data.rideName,
-          destinationLocation: validatedFields.data.destinationLocation,
-          startLocation: validatedFields.data.startLocation,
-          tripDuration: validatedFields.data.tripDuration,
-          userId: user.id,
-        },
-      });
-      messageString = "New ride created successfully";
-      console.log(
-        `New ride created successfully for the user : ${user.id} with rideId : ${newRide.id}`
-      );
-    } catch (error) {
-      console.log("error creating ride for the user: ", error);
-      messageString = "Error in creating new ride. Database internal error";
-    } finally {
+    if (!validatedFields.success) {
       return {
-        errors:
-          errorString.trim().length === 0 ? {} : { databaseError: errorString },
-        message: messageString,
+        errors: validatedFields.error.flatten().fieldErrors,
+        message: "Failed to create a new ride",
       };
     }
+
+    const user = await getUser("test1@gmail.com");
+    const newRide = await prisma.ride.create({
+      data: {
+        rideName: validatedFields.data.rideName,
+        destinationLocation: validatedFields.data.destinationLocation,
+        startLocation: validatedFields.data.startLocation,
+        tripDuration: validatedFields.data.tripDuration,
+        userId: user.id,
+      },
+    });
+
+    console.log(
+      `New ride created successfully for the user: ${user.id} with rideId: ${newRide.id}`
+    );
+
+    return {
+      errors: {},
+      message: "New ride created successfully",
+    };
+  } catch (error) {
+    console.log("Error creating ride for the user:", error);
+    return {
+      errors: {
+        databaseError: "Error in creating new ride. Database internal error",
+      },
+      message: "Error in creating new ride. Database internal error",
+    };
   }
 }
 
