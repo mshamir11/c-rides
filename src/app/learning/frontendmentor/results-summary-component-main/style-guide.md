@@ -54,3 +54,5 @@ Define steps:
 2. Fix the font style
 3. Fix the font size
 4. Color
+
+Mobile: 375 x 800
