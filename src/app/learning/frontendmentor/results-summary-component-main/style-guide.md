@@ -50,7 +50,7 @@ Use transparency to get the colour variations necessary to match the design. Hin
 
 
 Define steps:
-1. Complete the layout. First for mobile, then for desktop. Check the layout. Fix the layout then start designing.
+1. Complete the layout. First for mobile, then for desktop. Check the layout. Fix the layout then start designing. - done
 2. Fix the font style
 3. Fix the font size
 4. Color
