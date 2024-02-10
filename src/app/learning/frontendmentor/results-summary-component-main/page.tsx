@@ -64,7 +64,7 @@ export default function ResultSummaryComponent() {
           </div>
           <div className="flex p-4 justify-between h-[55px] bg-cobalt-blue/[0.1] rounded-lg">
             <div className="flex justify-between space-x-2">
-              <VisualIcon strokeWidth={2} />
+              <VisualIcon className="stroke-cobalt-blue stroke-2" />
               <div className="text-cobalt-blue font-bold"> Visual</div>
             </div>
             <div className="font-bold">
