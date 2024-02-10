@@ -13,15 +13,15 @@ export default function ResultSummaryComponent() {
     >
       <div className="flex flex-col md:flex-row md:justify-center md:items-center md:w-[740px] md:rounded-[30px] md:shadow-2xl ">
         <div className="flex h-[350px] md:flex-row md:h-[450px] md:w-[370px] ">
-          <div className="flex flex-col justify-evenly items-center bg-red-200 p-10 rounded-b-[30px] md:rounded-[30px] md:h-full w-full space-y-4">
-            <div className="bg-red-200 text-xl">Your Result</div>
-            <div className="flex flex-col justify-center items-center h-[120px] w-[120px] rounded-full bg-yellow-200">
-              <h1 className="text-5xl font-extrabold">76</h1>
-              <p className="text-center">of 100</p>{" "}
+          <div className="flex flex-col justify-evenly items-center bg-gradient-to-b from-light-slate-blue to-light-royal-blue p-10 rounded-b-[30px] md:rounded-[30px] md:h-full w-full space-y-4">
+            <div className="text-xl text-pale-blue">Your Result</div>
+            <div className="flex flex-col justify-center items-center h-[130px] w-[130px] rounded-full bg-gradient-to-b from-violet-blue to-persian-blue">
+              <h1 className="text-5xl font-extrabold text-white-new">76</h1>
+              <p className="text-center text-light-lavender">of 100</p>{" "}
             </div>
             <div className="flex flex-col items-center justify-center ">
-              <h1 className="text-2xl">Great</h1>
-              <p className="text-center">
+              <h1 className="text-2xl text-white-new">Great</h1>
+              <p className="text-center text-light-lavender">
                 You scored higher than 65% of the people who have taken these
                 tests.
               </p>
@@ -30,37 +30,49 @@ export default function ResultSummaryComponent() {
         </div>
 
         <div className="flex flex-col justify-between p-10 h-[450px]  md:w-[370px]">
-          <h1 className="text-xl font-bold">Summary</h1>
-          <div className="flex p-4 justify-between h-[55px] bg-yellow-100 rounded-lg">
+          <h1 className="text-xl font-bold text-dark-gray-blue">Summary</h1>
+          <div className="flex p-4 justify-between h-[55px] bg-light-red/[0.1] rounded-lg">
             <div className="flex justify-between space-x-2">
-              <ReactionIcon strokeWidth={2} />
-              <div className=""> Reaction</div>
+              <ReactionIcon className="stroke-light-red stroke-2" />
+              <div className="text-light-red font-bold"> Reaction</div>
             </div>
-            <div className="">80 / 100</div>
-          </div>
-          <div className="flex p-4 justify-between h-[55px] bg-yellow-100 rounded-lg">
-            <div className="flex justify-between space-x-2">
-              <MemoryIcon strokeWidth={2} />
-              <div className=""> Memory</div>
+            <div className="font-bold">
+              <span className="text-dark-gray-blue">80</span>{" "}
+              <span className="text-dark-gray-blue/[0.5]">/ 100</span>
             </div>
-            <div className="">80 / 100</div>
           </div>
-          <div className="flex p-4 justify-between h-[55px] bg-yellow-100 rounded-lg">
+          <div className="flex p-4 justify-between h-[55px] bg-orangey-yellow/[0.1] rounded-lg">
             <div className="flex justify-between space-x-2">
-              <VerbalIcon strokeWidth={2} />
-              <div className=""> Verbal</div>
+              <MemoryIcon className="stroke-orangey-yellow stroke-2" />
+              <div className="text-orangey-yellow font-bold"> Memory</div>
+            </div>
+            <div className="font-bold">
+              <span className="text-dark-gray-blue">92</span>{" "}
+              <span className="text-dark-gray-blue/[0.5]">/ 100</span>
+            </div>
+          </div>
+          <div className="flex p-4 justify-between h-[55px] bg-green-teal/[0.1] rounded-lg">
+            <div className="flex justify-between space-x-2">
+              <VerbalIcon className="stroke-green-teal stroke-2" />
+              <div className="text-green-teal font-bold"> Verbal</div>
             </div>
 
-            <div className="">80 / 100</div>
+            <div className="font-bold">
+              <span className="text-dark-gray-blue">61</span>{" "}
+              <span className="text-dark-gray-blue/[0.5]">/ 100</span>
+            </div>
           </div>
-          <div className="flex p-4 justify-between h-[55px] bg-yellow-100 rounded-lg">
+          <div className="flex p-4 justify-between h-[55px] bg-cobalt-blue/[0.1] rounded-lg">
             <div className="flex justify-between space-x-2">
               <VisualIcon strokeWidth={2} />
-              <div className=""> Visual</div>
+              <div className="text-cobalt-blue font-bold"> Visual</div>
             </div>
-            <div className="">80 / 100</div>
+            <div className="font-bold">
+              <span className="text-dark-gray-blue">72</span>{" "}
+              <span className="text-dark-gray-blue/[0.5]">/ 100</span>
+            </div>
           </div>
-          <button className="bg-yellow-100 h-[55px] rounded-[30px] font-bold">
+          <button className="bg-dark-gray-blue text-white h-[55px] rounded-[30px] font-bold">
             Continue
           </button>
         </div>
