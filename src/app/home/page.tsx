@@ -3,16 +3,17 @@ import { auth } from "@/app/lib/auth";
 import { redirect } from "next/navigation";
 import { SIGN_IN_URL } from "@/app/utils/constants";
 import Link from "next/link";
-import { showMyRides } from "../lib/actions";
+import { showMyRides, IRide, State } from "../lib/actions";
 import { useState } from "react";
-import { IRide } from "../lib/actions";
 
 export default function Home() {
   const [rides, setRides] = useState<IRide[]>([]);
 
   const handleShowMyRides = async () => {
-    const ridesJoined = await showMyRides();
-    setRides(ridesJoined);
+    const ridesJoined: IRide[] | State = await showMyRides();
+    if (Array.isArray(ridesJoined)) {
+      setRides(ridesJoined);
+    }
   };
 
   const getLandingPageForRegisteredUsers = () => {

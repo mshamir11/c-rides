@@ -131,8 +131,19 @@ export async function getUser(email: string) {
   return user;
 }
 
-export async function showMyRides() {
-  const emailId = "test1@gmail.com";
-  const user = await getUser(emailId);
+export async function showMyRides(): Promise<State | IRide[]> {
+  const session: any = await auth();
+  const validatedUser = UserSchema.safeParse({
+    name: session.user.name,
+    email: session.user.email,
+    image: session.user?.image,
+  });
+  if (!validatedUser.success) {
+    return {
+      errors: validatedUser.error.flatten().fieldErrors,
+      message: "Failed to create a new ride, corrupt user information",
+    };
+  }
+  const user = await getUser(validatedUser.data.email);
   return [...user.ridesCreated, ...user.ridesJoined];
 }
