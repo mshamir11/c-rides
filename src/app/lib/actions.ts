@@ -1,8 +1,7 @@
 "use server";
-import { PrismaClient, User } from "@prisma/client";
 import { z } from "zod";
-
-const prisma = new PrismaClient();
+import { auth } from "./auth";
+import prismaClient from "./prismaClient";
 
 const RideSchema = z.object({
   id: z.string(),
@@ -16,9 +15,15 @@ const RideSchema = z.object({
   createdBy: z.string(),
 });
 
+const UserSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  image: z.string().url().optional(),
+});
+
 const Ride = RideSchema.omit({
-  createdBy: true
-})
+  createdBy: true,
+});
 
 export type IRide = z.TypeOf<typeof Ride>;
 
@@ -37,6 +42,8 @@ export type State = {
     startDate?: string[];
     tripDuration?: string[];
     databaseError?: string;
+    name?: string[];
+    email?: string[];
   };
   message?: string | null;
 };
@@ -67,8 +74,22 @@ export async function createRide(
       };
     }
 
-    const user = await getUser("test1@gmail.com");
-    const newRide = await prisma.ride.create({
+    const session: any = await auth();
+    const validatedUser = UserSchema.safeParse({
+      name: session.user.name,
+      email: session.user.email,
+      image: session.user?.image,
+    });
+
+    if (!validatedUser.success) {
+      return {
+        errors: validatedUser.error.flatten().fieldErrors,
+        message: "Failed to create a new ride, corrupt user information",
+      };
+    }
+
+    const user = await getUser(validatedUser.data.email);
+    const newRide = await prismaClient.ride.create({
       data: {
         rideName: validatedFields.data.rideName,
         destinationLocation: validatedFields.data.destinationLocation,
@@ -97,15 +118,15 @@ export async function createRide(
   }
 }
 
-export async function getUser(email:string) {
-  const user = await prisma.user.findUniqueOrThrow({
+export async function getUser(email: string) {
+  const user = await prismaClient.user.findUniqueOrThrow({
     where: {
       email: email,
     },
     include: {
       ridesCreated: true,
-      ridesJoined: true
-    }
+      ridesJoined: true,
+    },
   });
   return user;
 }
