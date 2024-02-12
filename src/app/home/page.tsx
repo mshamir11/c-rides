@@ -31,6 +31,10 @@ export default function Home() {
     }
   };
 
+  const handleJoinRide = async (rideId: string) => {
+    console.log("rideId,", rideId);
+  };
+
   const getLandingPageForRegisteredUsers = () => {
     return (
       <div className="flex justify-center">
@@ -120,7 +124,10 @@ export default function Home() {
                             {ride.tripDuration}
                           </td>
                           <td>
-                            <button className="w-36 h-10 border-2 border-black justify-center items-center rounded-md bg-slate-200 my-2">
+                            <button
+                              className="w-36 h-10 border-2 border-black justify-center items-center rounded-md bg-slate-200 my-2"
+                              onClick={() => handleJoinRide(ride.id)}
+                            >
                               Join this ride
                             </button>
                           </td>

@@ -153,3 +153,44 @@ export async function getAllRides(): Promise<State | IRide[]> {
   const rides = await prismaClient.ride.findMany();
   return rides;
 }
+
+const getRide = async (rideId: string): Promise<IRide | State> => {
+  try {
+    const ride = await prismaClient.ride.findUniqueOrThrow({
+      where: {
+        id: rideId,
+      },
+    });
+
+    return ride;
+  } catch (error) {
+    return {
+      message: `Failed to find a ride with ride Id : ${rideId}`,
+    };
+  }
+};
+
+export async function joinARide(rideId: string) {
+  const ride: IRide | State = await getRide(rideId);
+
+  if ("message" in ride) {
+    console.log("Error");
+  } else {
+    const session: any = await auth();
+    const validatedUser = UserSchema.safeParse({
+      name: session.user.name,
+      email: session.user.email,
+      image: session.user?.image,
+    });
+    if (!validatedUser.success) {
+      return {
+        errors: validatedUser.error.flatten().fieldErrors,
+        message: "Failed to create a new ride, corrupt user information",
+      };
+    }
+
+    const user = await getUser(validatedUser.data.email);
+
+    //TODO : Update userJoinedProperty of ride.
+  }
+}
