@@ -131,7 +131,8 @@ export async function getUser(email: string) {
   return user;
 }
 
-export async function showMyRides(): Promise<State | IRide[]> {
+
+export async function getMyRides(): Promise<State | IRide[]> {
   const session: any = await auth();
   const validatedUser = UserSchema.safeParse({
     name: session.user.name,
@@ -146,4 +147,9 @@ export async function showMyRides(): Promise<State | IRide[]> {
   }
   const user = await getUser(validatedUser.data.email);
   return [...user.ridesCreated, ...user.ridesJoined];
+}
+
+export async function getAllRides(): Promise<State | IRide[]> {
+  const rides = await prismaClient.ride.findMany();
+  return rides;
 }
