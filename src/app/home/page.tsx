@@ -69,7 +69,7 @@ export default function Home() {
               <div>
                 My rides
                 <div>
-                  {myRides.map((ride) => (
+                  {myRides.map((ride, index) => (
                     <div key={ride.id}>
                       <p>ID: {ride.id}</p>
                       <p>Ride Name: {ride.rideName}</p>
@@ -86,16 +86,50 @@ export default function Home() {
               <br />
               <hr />
               <div>
-                Rides available around you
-                <div>
-                  {allRides.map((ride) => (
-                    <div key={ride.id}>
-                      <p>ID: {ride.id}</p>
-                      <p>Ride Name: {ride.rideName}</p>
-                      <p>Destination Location: {ride.destinationLocation}</p>
-                    </div>
-                  ))}
+                <h1 className="font-bold text-2xl my-4">
+                  Rides available around you
+                </h1>
+
+                <div className="flex justify-center">
+                  <table className="table-fixed w-full text-center border-collapse border border-slate-400">
+                    <thead>
+                      <tr>
+                        <th className="border border-slate-300">Ride Number</th>
+                        <th className="border border-slate-300">Ride Name</th>
+                        <th className="border border-slate-300">
+                          Destination Location
+                        </th>
+                        <th className="border border-slate-300">
+                          Trip Duration
+                        </th>
+                        <th className="border border-slate-300"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allRides.map((ride, index) => (
+                        <tr key={ride.id} className="border border-slate-300">
+                          <td className="border border-slate-300">{index}</td>
+                          <td className="border border-slate-300">
+                            {" "}
+                            {ride.rideName}
+                          </td>
+                          <td className="border border-slate-300">
+                            {ride.destinationLocation}
+                          </td>
+                          <td className="border border-slate-300">
+                            {ride.tripDuration}
+                          </td>
+                          <td>
+                            <button className="w-36 h-10 border-2 border-black justify-center items-center rounded-md bg-slate-200 my-2">
+                              Join this ride
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
+                <div></div>
               </div>
             </div>
           )}
