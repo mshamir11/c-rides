@@ -21,6 +21,8 @@ const config: Config = {
       },
       backgroundImage: {
         "bubble-pattern": "url('/bg-pattern-card.svg')",
+        "space-home-mobile":
+          "url('/space-website/home/background-home-mobile.jpg')",
       },
       borderWidth: {
         "1/2": "0.5px",
@@ -41,6 +43,7 @@ const config: Config = {
         "orangey-yellow": "hsl(39, 100%, 56%)",
         "green-teal": "hsl(166, 100%, 37%)",
         "cobalt-blue": "hsl(234, 85%, 45%)",
+        "space-violet": "#D0D6F9",
       },
       screens: {
         lgs: "1440px",
