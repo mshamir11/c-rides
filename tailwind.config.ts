@@ -23,6 +23,10 @@ const config: Config = {
         "bubble-pattern": "url('/bg-pattern-card.svg')",
         "space-home-mobile":
           "url('/space-website/home/background-home-mobile.jpg')",
+        "space-home-tablet":
+          "url('/space-website/home/background-home-tablet.jpg')",
+        "space-home-desktop":
+          "url('/space-website/home/background-home-desktop.jpg')",
       },
       borderWidth: {
         "1/2": "0.5px",
@@ -44,6 +48,7 @@ const config: Config = {
         "green-teal": "hsl(166, 100%, 37%)",
         "cobalt-blue": "hsl(234, 85%, 45%)",
         "space-violet": "#D0D6F9",
+        "space-grey": "#979797",
       },
       screens: {
         lgs: "1440px",
