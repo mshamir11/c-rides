@@ -45,7 +45,7 @@ export default function HomePage() {
               </p>
               <p className="text-[16px] tracking-[2.7px]">
                 <span className="hidden lg:inline font-extrabold">01 </span>
-                DESTINATION
+                DESTINATIO N
               </p>
               <p className="text-[16px] tracking-[2.7px]">
                 <span className="hidden lg:inline font-extrabold">02 </span>CREW
