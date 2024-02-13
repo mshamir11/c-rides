@@ -16,6 +16,8 @@ const config: Config = {
       },
       fontSize: {
         xss: "0.625rem",
+        space: "5rem",
+        smm: "0.938rem",
       },
       backgroundImage: {
         "bubble-pattern": "url('/bg-pattern-card.svg')",
