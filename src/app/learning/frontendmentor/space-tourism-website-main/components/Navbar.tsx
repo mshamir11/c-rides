@@ -10,12 +10,12 @@ const barlowCondensed = Barlow_Condensed({
 
 export default function Navbar() {
   return (
-    <div className="flex w-full justify-between items-center p-[24px] md:p-0 md:ml-[39px] lgs:mt-[40px] lgs:ml-[60px] overflow-visible">
+    <div className="flex w-full justify-between items-center p-[24px] md:p-0 md:ml-[39px] lgs:pt-[40px] lgs:ml-[60px] overflow-visible">
       <Image src={logo} alt="logo" width={40} height={40} />
 
       <div className="hidden lgs:block w-[473px] border-[0.5px] mr-[-200px] z-10"></div>
 
-      <div className="h-[21px] w-[24px] md:h-[96px] md:w-[450px] flex md:justify-center md:items-center lgs:w-[830px] md:bg-white/[0.04] lgs:bg-transparent lgs:backdrop-blur-md">
+      <div className="h-[21px] w-[24px] md:h-[96px] md:w-[450px] flex md:justify-center md:items-center lgs:w-[830px] md:bg-white/[0.04] lgs:bg-transparent lgs:backdrop-blur-md z-9">
         <Image
           className="md:hidden"
           src={hamburger}
