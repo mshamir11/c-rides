@@ -2,6 +2,7 @@ import Image from "next/image";
 import logo from "../assets/shared/logo.svg";
 import hamburger from "../assets/shared/icon-hamburger.svg";
 import { Bellefair, Barlow_Condensed, Barlow } from "next/font/google";
+import Link from "next/link";
 
 const barlowCondensed = Barlow_Condensed({
   weight: ["400", "500", "800"],
@@ -28,7 +29,9 @@ export default function Navbar() {
         >
           <p className="text-[16px] tracking-[2.7px]">
             <span className="hidden lgs:inline font-extrabold">00 </span>
-            HOME
+            <Link href={"space-tourism-website-main/photos"} passHref>
+              HOME
+            </Link>
           </p>
           <p className="text-[16px] tracking-[2.7px]">
             <span className="hidden lgs:inline font-extrabold">01 </span>
