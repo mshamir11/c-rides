@@ -61,8 +61,7 @@ export default function Destination() {
             <Image src={moonImage} alt="Moon Image"></Image>
           </div>
 
-          {/* Description side */}
-          <div className="flex flex-col justify-center items-center lgs:items-start lgs:h-[472px] lgs:w-[445px] lgs:justify-between">
+          <div className="flex flex-col justify-between items-center lgs:items-start h-[457px] md:h-[389px] lgs:h-[472px] lgs:w-[445px]">
             <div className="h-[28px] md:h-[34px] w-[237.5px] md:[285.5px] flex justify-between text-[14px] md:text-[16px] tracking-[2.36px] md:tracking-[2.7px]">
               <span>MOON</span>
               <span>MARS</span>
@@ -86,7 +85,7 @@ export default function Destination() {
 
             <div className="h-[1px] w-[327px] md:w-[573px] lgs:w-[444px] bg-space-grey"></div>
 
-            <div className="h-[164px] md:h-[90px] w-[223px] md:w-[573px] lgs:w-auto lgs:space-x-[69px] flex flex-col md:flex-row items-end text-start">
+            <div className="h-[164px] md:h-[90px] w-[223px] md:w-[573px] lgs:w-auto lgs:space-x-[69px] flex flex-col md:flex-row items-end text-center md:justify-center lgs:text-start">
               <div className="h-[61px] w-[216px] lgs:w-[143px] ">
                 <div className="text-[14px] tracking-[2.36px] uppercase">
                   Avg. distance
