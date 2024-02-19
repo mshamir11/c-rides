@@ -1,20 +1,5 @@
-import { Bellefair, Barlow_Condensed, Barlow } from "next/font/google";
+import { bellefair, barlowCondensed, barlowRegular } from "./assets/fonts";
 import Navbar from "./components/Navbar";
-
-const bellefair = Bellefair({
-  weight: ["400"],
-  subsets: ["latin"],
-});
-
-const barlowCondensed = Barlow_Condensed({
-  weight: ["400", "500", "800"],
-  subsets: ["latin"],
-});
-
-const barlowRegular = Barlow({
-  weight: ["400"],
-  subsets: ["latin"],
-});
 
 export default function HomePage() {
   return (

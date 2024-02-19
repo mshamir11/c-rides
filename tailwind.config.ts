@@ -49,6 +49,7 @@ const config: Config = {
         "cobalt-blue": "hsl(234, 85%, 45%)",
         "space-violet": "#D0D6F9",
         "space-grey": "#979797",
+        "space-dark-grey": "#616476",
       },
       screens: {
         lgs: "1440px",
