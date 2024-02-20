@@ -1,9 +1,6 @@
 "use client";
-import { auth } from "@/app/lib/auth";
-import { redirect } from "next/navigation";
-import { SIGN_IN_URL } from "@/app/utils/constants";
 import Link from "next/link";
-import { getAllRides, getMyRides, IRide, State } from "@/app/lib/actions";
+import { getMyRides, IRide, State, getUnjoinedRides } from "@/app/lib/actions";
 import { useState } from "react";
 
 export default function Home() {
@@ -23,7 +20,7 @@ export default function Home() {
   };
 
   const handleShowAllRides = async () => {
-    const allRidesAvailable: IRide[] | State = await getAllRides();
+    const allRidesAvailable: IRide[] | State = await getUnjoinedRides();
     if (Array.isArray(allRidesAvailable)) {
       setAllRides(allRidesAvailable);
       setShowAllRides(!showAllRides);

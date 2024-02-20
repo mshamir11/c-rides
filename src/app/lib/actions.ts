@@ -154,6 +154,32 @@ export async function getAllRides(): Promise<State | IRide[]> {
   return rides;
 }
 
+/**
+ * Retrieves unjoined rides for a given user.
+ * 
+ * @param {string} userId - The ID of the user.
+ * @returns {Promise<IRide[]>} A promise that resolves to an array of unjoined rides.
+ * @throws {Error} When there is an issue with the database query.
+ */
+const getUnjoinedRidesForUser = async (userId: string): Promise<IRide[]> =>{
+  try {
+    const unjoinedRides = await prismaClient.ride.findMany({
+      where: {
+        userId: {
+          not: userId, // Filter out rides created by the user
+        },
+        usersJoined: {
+          none: { id: userId }, // Filter out rides that the user has joined
+        },
+      },
+    });
+
+    return unjoinedRides;
+  } catch (error) {
+    throw new Error(`Failed to retrieve unjoined rides: ${error}`);
+  }
+}
+
 const getRide = async (rideId: string): Promise<IRide | State> => {
   try {
     const ride = await prismaClient.ride.findUniqueOrThrow({
@@ -193,4 +219,26 @@ export async function joinARide(rideId: string) {
 
     //TODO : Update userJoinedProperty of ride.
   }
+}
+
+/**
+ * Retrieves unjoined rides for a user.
+ * 
+ * @returns {Promise<IRide[] | State>} A promise that resolves to an array of unjoined rides or a state object.
+ */
+export async function getUnjoinedRides(): Promise<IRide[] | State> {
+  const session: any = await auth();
+  const validatedUser = UserSchema.safeParse({
+    name: session.user.name,
+    email: session.user.email,
+    image: session.user?.image,
+  });
+  if (!validatedUser.success) {
+    return {
+      errors: validatedUser.error.flatten().fieldErrors,
+      message: "Failed to create a new ride, corrupt user information",
+    };
+  }
+  const user = await getUser(validatedUser.data.email);
+  return getUnjoinedRidesForUser(user.id);
 }
