@@ -37,6 +37,12 @@ export default function Home() {
 
   const handleJoinRide = async (rideId: string) => {
     await joinARide(rideId);
+    const updatedRides = [...allRides];
+    const rideIndex = updatedRides.findIndex((ride) => ride.id === rideId);
+    if (rideIndex !== -1) {
+      updatedRides.splice(rideIndex, 1);
+      setAllRides(updatedRides);
+    }
   };
 
   const getLandingPageForRegisteredUsers = () => {
@@ -53,9 +59,6 @@ export default function Home() {
             >
               Create Ride
             </Link>
-            <button className="flex p-4 w-32 h-10 border-2 border-black justify-center items-center rounded-md">
-              Join Ride
-            </button>
             <button
               className="flex p-4 w-40 h-10 border-2 border-black justify-center items-center rounded-md"
               onClick={() => handleShowMyRides()}
