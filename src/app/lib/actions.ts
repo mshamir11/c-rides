@@ -251,3 +251,47 @@ export async function getUnjoinedRides(): Promise<IRide[] | State> {
   const user = await getUser(validatedUser.data.email);
   return getUnjoinedRidesForUser(user.id);
 }
+
+/**
+ * Drops a ride from the user's list of joined rides.
+ * 
+ * @param {string} rideId - The ID of the ride to be dropped.
+ * @returns {Promise<{errors: object, message: string}>} - A promise that resolves to an object containing any errors and a message.
+ */
+export async function dropRideFromUser(rideId: string) {
+  const session: any = await auth();
+  const validatedUser = UserSchema.safeParse({
+    name: session.user.name,
+    email: session.user.email,
+    image: session.user?.image,
+  });
+  if (!validatedUser.success) {
+    return {
+      errors: validatedUser.error.flatten().fieldErrors,
+      message: "Failed to drop the ride, corrupt user information",
+    };
+  }
+
+  // TODO: Get user id from session
+  const user = await getUser(validatedUser.data.email);
+
+  try {
+    const updatedUser = await prismaClient.user.update({
+      where: { id: user.id },
+      data: {
+        ridesJoined: {
+          disconnect: { id: rideId },
+        },
+      },
+    });
+    console.log(`User ${user.id} dropped ride ${rideId}`);
+  } catch (error) {
+    console.log("Error dropping ride for the user:", error);
+    return {
+      errors: {
+        databaseError: "Error in dropping ride. Database internal error",
+      },
+      message: "Error in dropping ride. Database internal error",
+    };
+  }
+}

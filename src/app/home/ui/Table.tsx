@@ -1,5 +1,4 @@
 import { IRide } from "@/app/lib/actions";
-import { join } from "path";
 
 type TableProps = {
   rides: IRide[];
@@ -39,8 +38,8 @@ export const Table: React.FC<TableProps> = ({
             </thead>
             <tbody>
               {rides.map((ride, index) => (
-                <tr key={ride.id} className="border border-slate-300">
-                  <td className="border border-slate-300">{index}</td>
+                <tr key={index} className="border border-slate-300">
+                  <td className="border border-slate-300">{index + 1}</td>
                   <td className="border border-slate-300"> {ride.rideName}</td>
                   <td className="border border-slate-300">
                     {ride.destinationLocation}

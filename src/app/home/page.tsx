@@ -6,6 +6,7 @@ import {
   State,
   getUnjoinedRides,
   joinARide,
+  dropRideFromUser,
 } from "@/app/lib/actions";
 import { useState } from "react";
 import { join } from "path";
@@ -46,6 +47,16 @@ export default function Home() {
     }
   };
 
+  const handleDropRide = async (rideId: string) => {
+    await dropRideFromUser(rideId);
+    const updatedRides = [...myRides];
+    const rideIndex = updatedRides.findIndex((ride) => ride.id === rideId);
+    if (rideIndex !== -1) {
+      updatedRides.splice(rideIndex, 1);
+      setMyRides(updatedRides);
+    }
+  };
+
   const getLandingPageForRegisteredUsers = () => {
     return (
       <div className="flex justify-center">
@@ -77,7 +88,7 @@ export default function Home() {
           {myRides.length > 0 && showMyRides && (
             <Table
               rides={myRides}
-              onSubmit={handleJoinRide}
+              onSubmit={handleDropRide}
               cancelRide={true}
             />
           )}
