@@ -19,7 +19,10 @@ export const Table: React.FC<TableProps> = ({
       <br />
       <hr />
       <div>
-        <h1 className="font-bold text-2xl my-4">Rides available around you</h1>
+        <h1 className="font-bold text-2xl my-4">
+          {(joinRide && "Rides available around you") ||
+            (cancelRide && "My Rides")}
+        </h1>
 
         <div className="flex justify-center">
           <table className="table-fixed w-full text-center border-collapse border border-slate-400">
