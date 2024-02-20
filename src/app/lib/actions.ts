@@ -2,6 +2,13 @@
 import { z } from "zod";
 import { auth } from "./auth";
 import prismaClient from "./prismaClient";
+import { Irish_Grover } from "next/font/google";
+
+const UserSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  image: z.string().url().optional(),
+});
 
 const RideSchema = z.object({
   id: z.string(),
@@ -12,13 +19,8 @@ const RideSchema = z.object({
   tripDuration: z.coerce.number(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  createdBy: z.string(),
-});
-
-const UserSchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  image: z.string().url().optional(),
+  createdBy: UserSchema,
+  userJoined: z.array(UserSchema).optional(),
 });
 
 const Ride = RideSchema.omit({
@@ -131,7 +133,6 @@ export async function getUser(email: string) {
   return user;
 }
 
-
 export async function getMyRides(): Promise<State | IRide[]> {
   const session: any = await auth();
   const validatedUser = UserSchema.safeParse({
@@ -156,12 +157,12 @@ export async function getAllRides(): Promise<State | IRide[]> {
 
 /**
  * Retrieves unjoined rides for a given user.
- * 
+ *
  * @param {string} userId - The ID of the user.
  * @returns {Promise<IRide[]>} A promise that resolves to an array of unjoined rides.
  * @throws {Error} When there is an issue with the database query.
  */
-const getUnjoinedRidesForUser = async (userId: string): Promise<IRide[]> =>{
+const getUnjoinedRidesForUser = async (userId: string): Promise<IRide[]> => {
   try {
     const unjoinedRides = await prismaClient.ride.findMany({
       where: {
@@ -178,13 +179,16 @@ const getUnjoinedRidesForUser = async (userId: string): Promise<IRide[]> =>{
   } catch (error) {
     throw new Error(`Failed to retrieve unjoined rides: ${error}`);
   }
-}
+};
 
 const getRide = async (rideId: string): Promise<IRide | State> => {
   try {
     const ride = await prismaClient.ride.findUniqueOrThrow({
       where: {
         id: rideId,
+      },
+      include: {
+        usersJoined: true,
       },
     });
 
@@ -196,29 +200,53 @@ const getRide = async (rideId: string): Promise<IRide | State> => {
   }
 };
 
-export async function joinARide(rideId: string) {
-  const ride: IRide | State = await getRide(rideId);
-
-  if ("message" in ride) {
-    console.log("Error");
-  } else {
-    const session: any = await auth();
-    const validatedUser = UserSchema.safeParse({
-      name: session.user.name,
-      email: session.user.email,
-      image: session.user?.image,
+/**
+ * Joins a ride with the specified user.
+ *
+ * @param {string} rideId - The ID of the ride to join.
+ * @param {string} email - The email of the user joining the ride.
+ * @returns {Promise<any>} - A promise that resolves to the updated ride object.
+ * @throws {Error} - If there is an error joining the ride.
+ */
+const joinARideWithUser = async (rideId: string, email: string) => {
+  try {
+    const updatedRide = await prismaClient.ride.update({
+      where: { id: rideId },
+      data: {
+        usersJoined: {
+          connect: { email: email },
+        },
+      },
     });
-    if (!validatedUser.success) {
-      return {
-        errors: validatedUser.error.flatten().fieldErrors,
-        message: "Failed to create a new ride, corrupt user information",
-      };
-    }
 
-    const user = await getUser(validatedUser.data.email);
-
-    //TODO : Update userJoinedProperty of ride.
+    console.log(`User ${email} joined ride ${rideId}`);
+    return updatedRide;
+  } catch (error) {
+    console.log("Error joining ride for the user:", error);
+    throw error;
   }
+};
+
+/**
+ * Joins a ride with the given ride ID.
+ *
+ * @param {string} rideId - The ID of the ride to join.
+ * @returns {Promise<Object>} - A promise that resolves to the updated ride object if successful, or an error object if unsuccessful.
+ */
+export async function joinARide(rideId: string) {
+  const session: any = await auth();
+  const validatedUser = UserSchema.safeParse({
+    name: session.user.name,
+    email: session.user.email,
+    image: session.user?.image,
+  });
+  if (!validatedUser.success) {
+    return {
+      errors: validatedUser.error.flatten().fieldErrors,
+      message: "Failed to create a new ride, corrupt user information",
+    };
+  }
+  const updatedRide = await joinARideWithUser(rideId, validatedUser.data.email);
 }
 
 /**

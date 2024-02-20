@@ -1,7 +1,14 @@
 "use client";
 import Link from "next/link";
-import { getMyRides, IRide, State, getUnjoinedRides } from "@/app/lib/actions";
+import {
+  getMyRides,
+  IRide,
+  State,
+  getUnjoinedRides,
+  joinARide,
+} from "@/app/lib/actions";
 import { useState } from "react";
+import { join } from "path";
 
 export default function Home() {
   const [myRides, setMyRides] = useState<IRide[]>([]);
@@ -29,7 +36,7 @@ export default function Home() {
   };
 
   const handleJoinRide = async (rideId: string) => {
-    console.log("rideId,", rideId);
+    await joinARide(rideId);
   };
 
   const getLandingPageForRegisteredUsers = () => {
