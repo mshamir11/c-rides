@@ -181,25 +181,6 @@ const getUnjoinedRidesForUser = async (userId: string): Promise<IRide[]> => {
   }
 };
 
-const getRide = async (rideId: string): Promise<IRide | State> => {
-  try {
-    const ride = await prismaClient.ride.findUniqueOrThrow({
-      where: {
-        id: rideId,
-      },
-      include: {
-        usersJoined: true,
-      },
-    });
-
-    return ride;
-  } catch (error) {
-    return {
-      message: `Failed to find a ride with ride Id : ${rideId}`,
-    };
-  }
-};
-
 /**
  * Joins a ride with the specified user.
  *
