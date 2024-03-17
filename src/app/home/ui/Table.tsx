@@ -1,4 +1,5 @@
 import { IRide } from "@/app/lib/actions";
+import { join } from "path";
 
 type TableProps = {
   rides: IRide[];
@@ -47,7 +48,7 @@ export const Table: React.FC<TableProps> = ({
                   <td className="border border-slate-300">
                     {ride.tripDuration}
                   </td>
-                  <td>
+                  <td className="border">
                     <button
                       className="w-36 h-10 border-2 border-black justify-center items-center rounded-md bg-slate-200 my-2"
                       onClick={() => onSubmit(ride.id)}
@@ -56,6 +57,13 @@ export const Table: React.FC<TableProps> = ({
                         (cancelRide && "Drop this Ride")}
                     </button>
                   </td>
+                  {cancelRide && (
+                    <td>
+                      <button className="w-36 h-10 border-2 border-black justify-center items-center rounded-md bg-slate-200 my-2">
+                        Chat
+                      </button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
