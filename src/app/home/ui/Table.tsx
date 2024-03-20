@@ -1,4 +1,5 @@
 import { IRide } from "@/app/lib/actions";
+import Link from "next/link";
 import { join } from "path";
 
 type TableProps = {
@@ -59,9 +60,12 @@ export const Table: React.FC<TableProps> = ({
                   </td>
                   {cancelRide && (
                     <td>
-                      <button className="w-36 h-10 border-2 border-black justify-center items-center rounded-md bg-slate-200 my-2">
+                      <Link
+                        href="/chat"
+                        className="w-36 h-10 border-2 border-black justify-center items-center rounded-md bg-slate-200 my-2"
+                      >
                         Chat
-                      </button>
+                      </Link>
                     </td>
                   )}
                 </tr>
