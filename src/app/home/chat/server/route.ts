@@ -2,7 +2,6 @@ import pusher from "@/app/lib/pusherSenderConfig";
 
 export async function POST(request: Request) {
   const res = await request.json();
-  console.log(res);
   try {
     const { channelName, eventName, message } = res;
     await pusher.trigger(channelName, eventName, { message });
