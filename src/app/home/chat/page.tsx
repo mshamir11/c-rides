@@ -1,10 +1,12 @@
 "use client";
 import { IRide, State, getMyRides } from "@/app/lib/actions";
 import { useEffect, useState } from "react";
+import ChatWindowComponent from "./ChatWindowComponent";
 
-// TODO: Add case when user has not joined any rides.
 export default function Chat() {
   const [myRides, setMyRides] = useState<IRide[]>([]);
+  const [inputValue, setInputValue] = useState("");
+  const [currentChannel, setCurrentChannel] = useState<string>();
 
   useEffect(() => {
     const getRidesJoined = async () => {
@@ -20,6 +22,12 @@ export default function Chat() {
     getRidesJoined();
   }, []);
 
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      setInputValue(""); // Clear the input after submitting
+    }
+  };
+
   return (
     <div>
       <h1 className="text-xl font-bold">Chats</h1>
@@ -32,7 +40,9 @@ export default function Chat() {
               </ul>
             ))}
         </div>
-        <div className="">Here each chats</div>
+        <div className="">
+          <ChatWindowComponent id={currentChannel} />
+        </div>
       </div>
     </div>
   );
