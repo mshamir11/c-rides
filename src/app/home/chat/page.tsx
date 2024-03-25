@@ -28,6 +28,10 @@ export default function Chat() {
     }
   };
 
+  const setChatChannel = (channelId: string) => {
+    setCurrentChannel(channelId);
+  };
+
   return (
     <div>
       <h1 className="text-xl font-bold">Chats</h1>
@@ -36,12 +40,19 @@ export default function Chat() {
           {myRides.length > 0 &&
             myRides.map((ride, index) => (
               <ul key={index}>
-                <li className="border-b-2">{ride.id}</li>
+                <button
+                  className="border-b-2"
+                  onClick={() => {
+                    setChatChannel(ride.id);
+                  }}
+                >
+                  {ride.id}{" "}
+                </button>
               </ul>
             ))}
         </div>
         <div className="">
-          <ChatWindowComponent id={currentChannel} />
+          {currentChannel && <ChatWindowComponent channelId={currentChannel} />}
         </div>
       </div>
     </div>
