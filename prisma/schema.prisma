@@ -34,6 +34,7 @@ model User {
    image         String?
    accounts      Account[]
    sessions      Session[]
+  messages Message[]
 }
 
 model Account {
@@ -69,4 +70,15 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Message {
+  id String @id @default(cuid())
+  channelId String 
+  message String
+  timestamp DateTime @default(now())
+  userId String
+  author User @relation(fields: [userId], references: [id])
+
+  @@index([channelId], name: "channelId_index") 
 }
