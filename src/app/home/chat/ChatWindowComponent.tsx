@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import sendMessageToServer from "../../designsketches/sender/chatSender";
+import { sendMessageToServer, getMessagesFromServer } from "./server/chatUtils";
 import pusher from "@/app/lib/pusherReceiverConfig";
+import { getMessagesForAChannel } from "./server/actions";
 
 type ChatProps = {
   channelId: string;
 };
+
+// TODO : Fix bug, of not unsubscribing to the channel when not in use
 
 // TODO: Add user name associated with the message send
 const ChatWindowComponent: React.FC<ChatProps> = ({ channelId }) => {
@@ -28,7 +31,16 @@ const ChatWindowComponent: React.FC<ChatProps> = ({ channelId }) => {
   });
 
   useEffect(() => {
-    setMessages([]);
+    getMessagesFromServer(channelId)
+      .then((fetchedMessages) => {
+        if (fetchedMessages != null) {
+          const messageStrings = fetchedMessages.map((msg) => msg.message);
+          setMessages(messageStrings);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch messages:", error);
+      });
   }, [channelId]);
 
   return (
