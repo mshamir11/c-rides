@@ -1,4 +1,4 @@
-import { getMessagesForAChannel } from "../actions";
+import { getMessagesForAChannel, IMiniMessage } from "../actions";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);

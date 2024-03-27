@@ -4,7 +4,7 @@ import { IMessage } from "./actions";
 const sendMessageToServer = async (
   channelName: string,
   eventName: string,
-  message: string
+  text: string
 ) => {
   try {
     const response = await fetch("/home/chat/server", {
@@ -12,7 +12,7 @@ const sendMessageToServer = async (
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ channelName, eventName, message }),
+      body: JSON.stringify({ channelName, eventName, text }),
     });
 
     if (!response.ok) {

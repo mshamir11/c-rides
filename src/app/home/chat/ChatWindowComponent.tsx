@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { sendMessageToServer, getMessagesFromServer } from "./server/chatUtils";
 import pusher from "@/app/lib/pusherReceiverConfig";
-import { getMessagesForAChannel } from "./server/actions";
+import { getMessagesForAChannel, IMiniMessage } from "./server/actions";
 
 type ChatProps = {
   channelId: string;
@@ -11,7 +11,7 @@ type ChatProps = {
 
 // TODO: Add user name associated with the message send
 const ChatWindowComponent: React.FC<ChatProps> = ({ channelId }) => {
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<IMiniMessage[]>([]);
   const [currMessage, setCurrentMessage] = useState<string>("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,12 +20,14 @@ const ChatWindowComponent: React.FC<ChatProps> = ({ channelId }) => {
 
   const sendMessage = () => {
     sendMessageToServer(channelId, "new-message", currMessage);
+    setCurrentMessage("");
   };
 
   useEffect(() => {
     const channel = pusher.subscribe(channelId);
 
-    channel.bind("new-message", (data: { message: string }) => {
+    channel.bind("new-message", (data: { message: IMiniMessage }) => {
+      console.log(data);
       setMessages([...messages, data.message]);
     });
   });
@@ -34,8 +36,7 @@ const ChatWindowComponent: React.FC<ChatProps> = ({ channelId }) => {
     getMessagesFromServer(channelId)
       .then((fetchedMessages) => {
         if (fetchedMessages != null) {
-          const messageStrings = fetchedMessages.map((msg) => msg.message);
-          setMessages(messageStrings);
+          setMessages(fetchedMessages);
         }
       })
       .catch((error) => {
@@ -48,11 +49,15 @@ const ChatWindowComponent: React.FC<ChatProps> = ({ channelId }) => {
       <div className="h-[10vh] border-black border-b-2">
         <h1 className="text-xl font-bold">{channelId}</h1>
       </div>
-      <div className="h-[60vh] border-black border-b-2">
+      <div className="h-[60vh] border-black border-b-2 overflow-y-scroll">
         {messages && (
           <ul>
-            {messages.map((message: string, i: number) => {
-              return <li key={i}>{message}</li>;
+            {messages.map((messageObject: IMiniMessage, i: number) => {
+              return (
+                <li key={i}>
+                  {messageObject.userId}:{messageObject.message}
+                </li>
+              );
             })}
           </ul>
         )}
@@ -63,6 +68,7 @@ const ChatWindowComponent: React.FC<ChatProps> = ({ channelId }) => {
             className="border-2 border-black w-[300px]"
             type="text"
             placeholder="Enter your message"
+            value={currMessage}
             onChange={handleChange}
           />
         </div>
