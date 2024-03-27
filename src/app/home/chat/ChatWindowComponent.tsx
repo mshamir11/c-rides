@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { sendMessageToServer, getMessagesFromServer } from "./server/chatUtils";
 import pusher from "@/app/lib/pusherReceiverConfig";
 import { getMessagesForAChannel, IMiniMessage } from "./server/actions";
@@ -44,12 +44,47 @@ const ChatWindowComponent: React.FC<ChatProps> = ({ channelId }) => {
       });
   }, [channelId]);
 
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      const chatContainer = chatContainerRef.current;
+      const scrollHeight = chatContainer.scrollHeight;
+      const currentScroll = chatContainer.scrollTop;
+      const targetScroll = scrollHeight - chatContainer.clientHeight;
+
+      const animateScroll = (timestamp: number) => {
+        const elapsed = timestamp - startTime;
+        const progress = elapsed / duration;
+        const ease =
+          progress < 0.5
+            ? 2 * progress * progress
+            : -1 + (4 - 2 * progress) * progress;
+
+        chatContainer.scrollTop =
+          currentScroll + (targetScroll - currentScroll) * ease;
+
+        if (elapsed < duration) {
+          requestAnimationFrame(animateScroll);
+        }
+      };
+
+      const duration = 500; // Adjust animation duration as needed
+      const startTime = performance.now();
+
+      requestAnimationFrame(animateScroll);
+    }
+  }, [messages]);
+
   return (
     <div className="h-[80vh] w-[80vh] border-2 border-black">
       <div className="h-[10vh] border-black border-b-2">
         <h1 className="text-xl font-bold">{channelId}</h1>
       </div>
-      <div className="h-[60vh] border-black border-b-2 overflow-y-scroll">
+      <div
+        className="h-[60vh] border-black border-b-2 overflow-y-scroll"
+        ref={chatContainerRef}
+      >
         {messages && (
           <ul>
             {messages.map((messageObject: IMiniMessage, i: number) => {
