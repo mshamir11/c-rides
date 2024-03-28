@@ -278,3 +278,38 @@ export async function dropRideFromUser(rideId: string) {
     };
   }
 }
+
+export async function getRidesWithQuery(
+  searchTerm: string
+): Promise<IRide[] | State> {
+  try {
+    const results = await prismaClient.ride.findMany({
+      where: {
+        OR: [
+          {
+            rideName: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+          {
+            destinationLocation: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+    });
+    return results;
+  } catch (error) {
+    console.log("Error dropping ride for the user:", error);
+    return {
+      errors: {
+        databaseError:
+          "Error getting results from database. Database internal error",
+      },
+      message: "Error getting results from db.",
+    };
+  }
+}
