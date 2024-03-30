@@ -29,11 +29,11 @@ export default function Home() {
           <h1 className="text-2xl text-center">Features</h1>
           <div className="mt-10 bg-blue-100 rounded-md p-4">
             <ul className="grid grid-cols-3 jusitfy-stretch gap-x-4 gap-y-4 tracking-wide">
-              <li className="text-center">Host amazing rides near you</li>
-              <li className="text-center">Joining rides</li>
+              <li className="text-center">Host rides</li>
+              <li className="text-center">Join rides</li>
+              <li className="text-center">Find amazing rides near by</li>
               <li className="text-center">Rate your host</li>
               <li className="text-center">In App messaging</li>
-              <li className="text-center">Find relevant rides near by</li>
               <li className="text-center">Follow your favorite riders</li>
               <li className="text-center">
                 Get notified when a relevant ride is posted
