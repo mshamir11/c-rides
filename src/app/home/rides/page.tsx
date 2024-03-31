@@ -1,6 +1,6 @@
 "use client";
-import Search from "@/app/comonents/Search";
-import { Table } from "@/app/comonents/Table";
+import Search from "@/app/components/Search";
+import { Table } from "@/app/components/Table";
 import {
   getRidesWithQuery,
   getUnjoinedRides,

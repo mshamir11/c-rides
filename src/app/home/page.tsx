@@ -10,7 +10,7 @@ import {
 } from "@/app/lib/actions";
 import { useState } from "react";
 import { join } from "path";
-import { Table } from "../comonents/Table";
+import { Table } from "../components/Table";
 
 export default function Home() {
   const [myRides, setMyRides] = useState<IRide[]>([]);

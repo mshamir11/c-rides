@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className=" h-screen">
-      <div className="flex flex-col mx-20 pt-20 ">
+    <div className="">
+      <div className="flex flex-col mx-4 md:mx-20 pt-20 lgs:mx-[40rem]">
         <h1 className="text-4xl text-center font-bold">Community Rides</h1>
         <div className="flex justify-center mt-12">
           <p className="text-gray-700 flex justify-stretch tracking-widest text-justify">
@@ -25,23 +25,19 @@ export default function Home() {
           </Link>
         </div>
         <hr className="mt-10" />
-        <div className="mt-10 mx-20">
+        <div className="mt-10 md:mx-2 lgs:mx-20">
           <h1 className="text-2xl text-center">Features</h1>
-          <div className="mt-10 bg-blue-100 rounded-md p-4">
-            <ul className="grid grid-cols-3 jusitfy-stretch gap-x-4 gap-y-4 tracking-wide">
+          <div className="mt-10 bg-blue-100 rounded-md p-4 mb-4">
+            <ul className="grid md:grid-cols-3 gap-y-2 md:jusitfy-stretch md:gap-x-4 md:gap-y-4 lgs:gap-y-10 tracking-wide">
               <li className="text-center">Host rides</li>
               <li className="text-center">Join rides</li>
               <li className="text-center">Find amazing rides near by</li>
               <li className="text-center">Rate your host</li>
               <li className="text-center">In App messaging</li>
               <li className="text-center">Follow your favorite riders</li>
-              <li className="text-center">
-                Get notified when a relevant ride is posted
-              </li>
+              <li className="text-center">Notification for relevant rides</li>
               <li className="text-center">Write reviews for your ride</li>
-              <li className="text-center">
-                Write private anonymous feedback for host
-              </li>
+              <li className="text-center">Anonymous feedback for host</li>
             </ul>
           </div>
         </div>
